@@ -1,7 +1,8 @@
+local Notification = loadstring(game:HttpGet("https://api.irisapp.ca/Scripts/IrisBetterNotifications.lua"))()
+
+
 Notification.Notify("AutoArrest, spyro was here", "Loading", "nule", Settings = Default
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild("FULLY_LOADED_CHAR")
-
-local Notification = loadstring(game:HttpGet("https://api.irisapp.ca/Scripts/IrisBetterNotifications.lua"))()
 
 TargetPiso_ = Instance.new("Part", game.Workspace)
 TargetPiso_.Size = Vector3.new(40, 0.4, 40)
