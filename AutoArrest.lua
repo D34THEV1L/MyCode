@@ -46,7 +46,13 @@ getgenv().Time = 100
 		if v:IsA("Seat") then
 			v:Destroy()
 		end
-	end
+end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+	repeat wait() until character:FindFirstChild("FULLY_LOADED_CHAR")
+	e(character)
+end)
+
 	--variables                 
 	local Tracer = Instance.new("Part", game.Workspace)
 	Tracer.Name = "gay" 
@@ -364,7 +370,6 @@ getgenv().Time = 100
 						local a = game.Players.LocalPlayer.Backpack["[Shotgun]"]
 						a.Parent = game.Players.LocalPlayer.Character end
 				reload(game.Players.LocalPlayer.Name, "[Shotgun]")
-				wait(0.3)
 					for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
 						if v:isA("Tool") then
 							v.GripPos = Vector3.new(math.random(-10,10), -10, math.random(-10,10))
