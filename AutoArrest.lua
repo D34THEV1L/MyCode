@@ -1,7 +1,6 @@
 
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild("FULLY_LOADED_CHAR")
-getgenv().Time = 100
-
+getgenv().Time = 60
 TargetPiso_ = Instance.new("Part", game.Workspace)
 TargetPiso_.Size = Vector3.new(40, 0.4, 40)
 TargetPiso_.Position = Vector3.new(0, -8000, 0)
@@ -26,6 +25,10 @@ _G.Types = {
 	Block = Enum.PartType.Block, 
 	Cylinder = Enum.PartType.Cylinder
 }
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+	repeat wait() until character:FindFirstChild("FULLY_LOADED_CHAR")
+	e(character)
+end)
 
 
 function e(character)
@@ -47,6 +50,12 @@ for i, v in next, game.Workspace:GetDescendants() do
 		v:Destroy()
 	end
 end
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(character)
+	repeat wait() until character:FindFirstChild("FULLY_LOADED_CHAR")
+	e(character)
+end)
+
 --variables                 
 local Tracer = Instance.new("Part", game.Workspace)
 Tracer.Name = "gay" 
@@ -294,21 +303,7 @@ local Plr__ = game.Players.LocalPlayer
 
 
 local a = false
-spawn(function()
-	while true do task.wait() print(a)
-		pcall(function()
-			if a == false then
-				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
-			elseif a == true then
-				Plr__.Character.HumanoidRootPart.CFrame = target.Character.UpperTorso.CFrame
 
-			elseif a == "nada" then
-
-			end
-		end)	
-	end
-
-end)
 
 while wait() do
 	local succes, err = pcall(function()
@@ -317,13 +312,16 @@ while wait() do
 				if v:IsA("Tool") then v.Parent = game.Players.LocalPlayer.Backpack end
 			end
 			local PlayerTarget = GetPlayerWanted()
-			repeat task.wait()
+			target = PlayerTarget
+			repeat wait()
 				ActivateLock(game.Players:FindFirstChild(PlayerTarget.Name), true)
 
 				if not game.Players.LocalPlayer.Character:FindFirstChild("[Shotgun]") and not game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]") then
 					a = "nada"
 					GetShotgun()	
-
+					wait(1)
+					a = false
+					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
 				elseif game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]") then
 					game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]").Parent = game.Players.LocalPlayer.Character
 
@@ -336,13 +334,16 @@ while wait() do
 						end
 						GetShotgunAmmo()
 						wait(1)
+						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
+						print("Cogiendo municion")
+						a = false
 					end	
 
 				end
-
-				a = false
-
-				TargetPiso_.CFrame = CFrame.new(PlayerTarget.Character.HumanoidRootPart.Position + Vector3.new(0, -11 ,0))
+				
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
+				a = false	
+				TargetPiso_.CFrame = CFrame.new(PlayerTarget.Character.HumanoidRootPart.Position + Vector3.new(0, -10 ,0))
 				print("Funcionando")
 				local r15 = game.Players.LocalPlayer.Character
 
@@ -364,13 +365,15 @@ while wait() do
 					local a = game.Players.LocalPlayer.Backpack["[Shotgun]"]
 					a.Parent = game.Players.LocalPlayer.Character end
 				reload(game.Players.LocalPlayer.Name, "[Shotgun]")
-				wait(0.3)
 				for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
 					if v:isA("Tool") then
-						v.GripPos = Vector3.new(math.random(-5,5), -10, math.random(-5,5))
+						v.GripPos = Vector3.new(math.random(-8,8), -10, math.random(-8,8))
 					end
 				end
 				Plr__.Character["[Shotgun]"]:Activate()
+
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
+
 
 			until not target or target.Character.BodyEffects["K.O"].Value == true or game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.V)
 			for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
@@ -381,10 +384,14 @@ while wait() do
 					pcall(function()Plr__.Character.Humanoid:EquipTool(Plr__.Backpack.Cuff)end)
 					pcall(function()
 						a = true
+						Plr__.Character.HumanoidRootPart.CFrame = target.Character.UpperTorso.CFrame
 						print("arrestando")
 						Plr__.Character.Cuff:Activate()
+						Plr__.Character.HumanoidRootPart.CFrame = target.Character.UpperTorso.CFrame
 						wait(0.001)
+						Plr__.Character.HumanoidRootPart.CFrame = target.Character.UpperTorso.CFrame
 						Plr__.Character.Cuff:Deactivate()
+						Plr__.Character.HumanoidRootPart.CFrame = target.Character.UpperTorso.CFrame
 
 					end)
 				end
