@@ -363,7 +363,8 @@ getgenv().Time = 100
 					if not game.Players.LocalPlayer.Character:FindFirstChild("[Shotgun]") then 
 						local a = game.Players.LocalPlayer.Backpack["[Shotgun]"]
 						a.Parent = game.Players.LocalPlayer.Character end
-					reload(game.Players.LocalPlayer.Name, "[Shotgun]")
+				reload(game.Players.LocalPlayer.Name, "[Shotgun]")
+				wait(0.3)
 					for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
 						if v:isA("Tool") then
 							v.GripPos = Vector3.new(math.random(-10,10), -10, math.random(-10,10))
