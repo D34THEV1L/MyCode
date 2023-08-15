@@ -372,7 +372,7 @@ end)
 				reload(game.Players.LocalPlayer.Name, "[Shotgun]")
 					for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetChildren()) do
 						if v:isA("Tool") then
-							v.GripPos = Vector3.new(math.random(-10,10), -10, math.random(-10,10))
+							v.GripPos = Vector3.new(math.random(-5,5), -10, math.random(-5,5))
 						end
 					end
 					Plr__.Character["[Shotgun]"]:Activate()
