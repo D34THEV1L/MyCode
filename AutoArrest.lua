@@ -1,6 +1,21 @@
+function serverhop()
+	if not IrisNotificationMrJack then loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications()end;warn"Looking For A Server"IrisNotificationMrJack(1,"Notification","Looking For A Server",2)local a,b,c="https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100",{game.JobId}pcall(function()if not isfolder"MrJack Settings"then makefolder"MrJack Settings"end;b=game:GetService"HttpService":JSONDecode(readfile"MrJack Settings/ServerHop.json")end)local function d()pcall(function()writefile("MrJack Settings/ServerHop.json",game:GetService"HttpService":JSONEncode(b))end)end;local function e()while task.wait()do local f=game:GetService"HttpService":JSONDecode(game:HttpGetAsync(a))local g=f.nextPageCursor;for h,i in next,f.data do if type(i)=="table"and i.id and tonumber(i.playing)and tonumber(i.maxPlayers)and tonumber(i.maxPlayers)>tonumber(i.playing)and i.id~=game.JobId and not table.find(b,i.id)then c=i.id;warn("Server Found "..i.id)IrisNotificationMrJack(1,"Notification","Teleporting To Server\n"..i.id,5)table.insert(b,i.id)d()game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,i.id)wait(5)end end;if g then local j=a:find"&cursor="if j then a=a:gsub(a:sub(j),"")end;a=a.."&cursor="..g else break end end end;e()if c==nil then b={game.JobId}d()e()end;if c==nil then warn"Server Hop Failed"IrisNotificationMrJack(1,"Notification","No Server Found",2)end
+end
 
+getgenv().Time = 70
+spawn(function()
+	wait(getgenv().Time)
+	serverhop()
+end)
+
+spawn(function()
+	while wait() do 
+		wait(10)
+		keypress(0x56)
+		end
+end)
 repeat wait() until game:IsLoaded() and game.Players.LocalPlayer.Character:FindFirstChild("FULLY_LOADED_CHAR")
-getgenv().Time = 60
+
 TargetPiso_ = Instance.new("Part", game.Workspace)
 TargetPiso_.Size = Vector3.new(40, 0.4, 40)
 TargetPiso_.Position = Vector3.new(0, -8000, 0)
@@ -263,11 +278,6 @@ function CheckShotgunAmmo()
 	return game.Players.LocalPlayer.DataFolder.Inventory["[Shotgun]"].Value
 end
 
-
-function serverhop()
-	if not IrisNotificationMrJack then loadstring(game:HttpGet"https://raw.githubusercontent.com/thedragonslayer2/hey/main/Misc./iris%20notification%20function")()elseif IrisNotificationUserMrJack then IrisNotificationUserMrJack.ClearAllNotifications()end;warn"Looking For A Server"IrisNotificationMrJack(1,"Notification","Looking For A Server",2)local a,b,c="https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Desc&limit=100",{game.JobId}pcall(function()if not isfolder"MrJack Settings"then makefolder"MrJack Settings"end;b=game:GetService"HttpService":JSONDecode(readfile"MrJack Settings/ServerHop.json")end)local function d()pcall(function()writefile("MrJack Settings/ServerHop.json",game:GetService"HttpService":JSONEncode(b))end)end;local function e()while task.wait()do local f=game:GetService"HttpService":JSONDecode(game:HttpGetAsync(a))local g=f.nextPageCursor;for h,i in next,f.data do if type(i)=="table"and i.id and tonumber(i.playing)and tonumber(i.maxPlayers)and tonumber(i.maxPlayers)>tonumber(i.playing)and i.id~=game.JobId and not table.find(b,i.id)then c=i.id;warn("Server Found "..i.id)IrisNotificationMrJack(1,"Notification","Teleporting To Server\n"..i.id,5)table.insert(b,i.id)d()game:GetService"TeleportService":TeleportToPlaceInstance(game.PlaceId,i.id)wait(5)end end;if g then local j=a:find"&cursor="if j then a=a:gsub(a:sub(j),"")end;a=a.."&cursor="..g else break end end end;e()if c==nil then b={game.JobId}d()e()end;if c==nil then warn"Server Hop Failed"IrisNotificationMrJack(1,"Notification","No Server Found",2)end
-end
-
 getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
 	if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
 		serverhop()
@@ -306,21 +316,21 @@ local a = false
 
 
 while wait() do
-	local succes, err = pcall(function()
-		repeat wait()
+pcall(function()
 			for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 				if v:IsA("Tool") then v.Parent = game.Players.LocalPlayer.Backpack end
 			end
 			local PlayerTarget = GetPlayerWanted()
 			target = PlayerTarget
-			repeat wait()
+			repeat wait(0.1)
 				ActivateLock(game.Players:FindFirstChild(PlayerTarget.Name), true)
 
 				if not game.Players.LocalPlayer.Character:FindFirstChild("[Shotgun]") and not game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]") then
 					a = "nada"
 					GetShotgun()	
-					wait(1)
+					wait(2)
 					a = false
+					print("cOGIENDO MUNICION")
 					game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
 				elseif game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]") then
 					game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgun]").Parent = game.Players.LocalPlayer.Character
@@ -329,11 +339,13 @@ while wait() do
 				elseif game.Players.LocalPlayer.Character:FindFirstChild("[Shotgun]") or game.Players.LocalPlayer.Backpack:FindFirstChild("[Shotgub]") then
 					if tonumber(CheckShotgunAmmo()) < 15 then
 						a = "nada"
+						
 						for _, v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
 							if v:IsA("Tool") then v.Parent = game.Players.LocalPlayer.Backpack end
 						end
 						GetShotgunAmmo()
-						wait(1)
+						
+						wait(2)
 						game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
 						print("Cogiendo municion")
 						a = false
@@ -371,7 +383,7 @@ while wait() do
 					end
 				end
 				Plr__.Character["[Shotgun]"]:Activate()
-
+				print(target.Name)
 				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(TargetPiso_.Position + Vector3.new(0,3,0))
 
 
@@ -396,8 +408,5 @@ while wait() do
 					end)
 				end
 			until target.Character.BodyEffects["K.O"].Value == false or game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.V)
-		until tonumber(target.DataFolder.Information.Wanted.Value) == 0 or game:GetService("UserInputService"):IsKeyDown(Enum.KeyCode.V)
-	end)
-
-	if not succes then print(err) end
-end
+	end)	
+	end
